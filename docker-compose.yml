@@ -8,7 +8,7 @@ services:
     image: spring-backend:latest
     container_name: spring_backend
     ports:
-      - "8080:8080"              # hostPort:containerPort
+      - "8081:8080"              # hostPort:containerPort
     environment:
       - PORT=8080
       - JAVA_OPTS=${JAVA_OPTS:-"-Xmx512m"}
