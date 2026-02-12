@@ -8,16 +8,7 @@ services:
     image: spring-backend:latest
     container_name: spring_backend
     ports:
-      - "8081:8080"              # hostPort:containerPort
+      - "8081:8080"   # change to avoid port conflict
     environment:
-      - PORT=8080
-      - JAVA_OPTS=${JAVA_OPTS:-"-Xmx512m"}
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-prod}
+      - SPRING_PROFILES_ACTIVE=prod
     restart: unless-stopped
-    volumes:
-      - ./logs:/app/logs        # optional: persist app logs on the host
-
-# optional network (not required for a single-service deployment)
-networks:
-  default:
-    driver: bridge
