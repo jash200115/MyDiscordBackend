@@ -10,5 +10,7 @@ services:
     ports:
       - "8081:8080"   # change to avoid port conflict
     environment:
+      - MONGO_URI
+      - FRONTEND_URL
       - SPRING_PROFILES_ACTIVE=prod
     restart: unless-stopped
