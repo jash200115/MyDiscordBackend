@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: spring-backend:latest
+    container_name: spring_backend
+    ports:
+      - "8080:8080"              # hostPort:containerPort
+    environment:
+      - PORT=8080
+      - JAVA_OPTS=${JAVA_OPTS:-"-Xmx512m"}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-prod}
+    restart: unless-stopped
+    volumes:
+      - ./logs:/app/logs        # optional: persist app logs on the host
+    healthcheck:
+      # NOTE: this uses curl inside container; see caveat below
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+# optional network (not required for a single-service deployment)
+networks:
+  default:
+    driver: bridge
